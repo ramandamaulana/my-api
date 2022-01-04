@@ -1,26 +1,20 @@
 const express = require('express')
 const app = express()
+// Mongoose
 const mongoose = require('mongoose')
-
+// For Env
+const env = require('dotenv/config')
 // function 
 app.use(express.json())
+const cors = require('cors')
+const userRoutes = require('./routes/user')
+app.use('/api/',cors(),userRoutes)
 
 
-app.get('/home',(req,res)=>{
-    res.json({
-        body:{
-            message:''
-        }
-    })
-})
-
-app.post('/add',(req,res)=>{
-    res.json(req.body)
-})
-app.listen('3000',()=>{
+app.listen('8000',()=>{
     console.log('Hello Server Is Running')
 })
 
-mongoose.connect('mongodb+srv://ramanda:123@cluster0.hwawo.mongodb.net/myFirstDatabase?retryWrites=true&w=majority',()=>{
+mongoose.connect(process.env.DB,()=>{
 console.log('database Connected')
 })
