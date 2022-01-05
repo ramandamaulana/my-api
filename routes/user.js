@@ -1,6 +1,7 @@
 const express = require('express')
 const router = express.Router()
 const cors = require('cors')
+
 const UserModel = require('../models/User')
 
 router.get('/home',cors(), async(req,res)=>{
@@ -49,6 +50,22 @@ router.get('/user/:id',async(req,res)=>{
     }
 })
 // Delete
+
+router.put('/user/:id',async(req,res)=>{
+    const id = req.params.id;
+    const update =  await UserModel.update({
+        _id : id
+    },{
+        $set : req.body
+    }
+    )  
+
+    try{
+        res.send(update)
+    }catch(err){
+        res.send(err)
+    }
+})
 
 router.delete('/user/:id',async(req,res)=>{
     const id = req.params.id;
